@@ -25,5 +25,7 @@ public class DateTest {
 
         System.out.println("当前时间与晚上十二点的毫秒差"+timeOut);
         System.out.println("当前时间与晚上十二点的小时差"+hourTimeOut);
+
+        System.out.println("");
     }
 }
