@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title "订单创建时序图"
+actor "APP" as app
+
+participant "聚合服务" as api
+participant "商品服务" as product
+participant "订单服务" as order
+participant "商机服务" as oppty
+participant "支付服务" as pay
+
+autonumber /'开启自动编号'/
+activate app
+app -> api : 车型车系查询
+activate api
+api -> product : 车型车系查询
+activate product
+product -> api : 返回车型车系:spu
+deactivate product
+api -> app : 返回车型车系:spu
+deactivate api
+app -> app : 确认车型车系:spu
+app -> api : 属性查询
+activate api
+api -> product : 属性查询
+activate product
+product -> api : 返回属性:sku
+deactivate product
+api -> app : 返回属性:sku
+deactivate api
+app -> app : 确认属性:sku
+app -> api : 创建订单:sku、商机编号
+activate api
+api -> order : 下单校验:sku
+activate order
+order -> api : 返回校验密文
+api -> order : 下单:密文
+order -> api : 返回订单编号
+deactivate order
+api -> oppty : 绑定商机和订单:订单编号、商机编号
+activate oppty
+oppty -> api : 返回绑定结果
+deactivate oppty
+api -> app : 响应订单创建成功
+deactivate api
+app -> api : 支付申请:订单编号
+activate api
+api -> order : 查询收银台信息:交易信息
+activate order
+order -> api : 返回收银台信息:一期只有转账取第一个
+api -> order : 支付申请:收银台信息
+order -> api : 返回汇款信息:iban等
+deactivate order
+api -> app : 返回汇款信息:iban等
+deactivate api
+deactivate app
+
+activate pay
+pay -> pay : 收到汇款
+pay -> order : 认款到账
+deactivate pay
+activate order
+order --> api : 发送定金支付事件
+deactivate order
+activate api
+api -> oppty : 更新商机状态
+deactivate api
+@enduml
