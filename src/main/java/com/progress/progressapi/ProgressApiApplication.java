@@ -8,7 +8,11 @@ import org.springframework.core.env.Environment;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * @author 15101014325_90714
+ */
 @SpringBootApplication
+@Slf4j
 public class ProgressApiApplication {
 
     public static void main(String[] args) {
@@ -16,15 +20,17 @@ public class ProgressApiApplication {
         Environment env = app.run(args).getEnvironment();
 
         app.addListeners();
-/*        log.info("\n----------------------------------------------------------\n\t" +
+        log.info("\n----------------------------------------------------------\n\t" +
                         "Application '{}' is running! Access URLs:\n\t" +
                         "Local: \t\thttp://127.0.0.1:{}\n\t" +
                         "External: \thttp://{}:{}\n\t" +
+                        "env:\t\t{}\n\t" +
                         "----------------------------------------------------------",
                 env.getProperty("spring.application.name"),
                 env.getProperty("server.port"),
                 getIpAddress(),
-                env.getProperty("server.port"));*/
+                env.getProperty("server.port"),
+                env.getProperty("env"));
     }
 
     private static String getIpAddress() {
