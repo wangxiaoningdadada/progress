@@ -6,5 +6,5 @@ package com.progress.progressapi.test;
  *
  * @author: wangxiaoning
  */
-public class test1 {
+public class StringTest {
 }
