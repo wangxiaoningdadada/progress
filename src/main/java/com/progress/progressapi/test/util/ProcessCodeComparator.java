@@ -1,6 +1,12 @@
-package com.lixiang.vrdos.review.common.utils;
+package com.progress.progressapi.test.util;
 
+import com.progress.progressapi.test.dto.CodeDto;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * description: 流程编码排序
@@ -32,4 +38,26 @@ public class ProcessCodeComparator implements Comparator<String> {
         }
         return 0;
     }
+
+    public static void main(String[] args) {
+
+/*        List<String> code = new ArrayList<>();
+        code.add("2.1");
+        code.add("1.2");
+        code.add("1.1.1");
+        code.sort((a, b) -> new ProcessCodeComparator().compare(a, b));
+        System.out.println(code);*/
+
+
+        List<CodeDto> codes = new ArrayList<>();
+        codes.add(new CodeDto("2.1"));
+        codes.add(new CodeDto("1.2"));
+        codes.add(new CodeDto("1.1.1"));
+        codes.sort((a, b) -> new ProcessCodeComparator().compare(a.getCode(), b.getCode()));
+        //System.out.println(codes);
+        //codes.stream().forEach(System.out::println);
+        codes.stream().forEach(codeDto -> System.out.println(codeDto.getCode()));
+    }
+
+
 }
